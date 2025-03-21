@@ -1,19 +1,27 @@
 import React from 'react';
-import "./style.css"
+import "./style.css";
+import classnames from "classnames";
 
-function TodoList(props) {
+function TodoList({ listTodo, onTodoClick }) {
+    const handleTodoClick = (todo, index) => {
+        if (onTodoClick) {
+            onTodoClick(todo, index);
+        }
+    };
 
-    const { listTodo } = props;
-
-    return(
-        <>
-            <ul>
-                {listTodo.map((todo, index) => (
-                    <li key={index}>{todo.title}</li>
-                ))}
-            </ul>
-        </>
-    )
+    return (
+        <ul>
+            {listTodo.map((todo, index) => (
+                <li
+                    key={todo.id}
+                    onClick={() => handleTodoClick(todo, index)}
+                    className={classnames({ complete: todo.status === "complete", 'todo-item': true })}
+                >
+                    {todo.title}
+                </li>
+            ))}
+        </ul>
+    );
 }
 
 export default TodoList;
